@@ -1,8 +1,7 @@
-import * as types from "./actionTypes";
-
+// NOTE: DO NOT MODIFY the intial state structure in this file.
+import * as types from "./actionType";
 const initialState = {
-  tasks: [],
-  tags: [],
+  watches: [],
   isLoading: false,
   isError: false,
 };
@@ -10,27 +9,27 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case types.GET_TASKS_REQUEST:
-      return { ...state, isLoading: true };
-
-    case types.GET_TASKS_SUCCESS:
-      return { ...state, isLoading: false, tasks: payload };
-
-    case types.GET_TASKS_FAILURE:
-      return { ...state, isLoading: false, isError: true };
-
-    case types.GET_TAG_REQUEST:
-      return { ...state };
-
-    case types.GET_TAG_SUCCESS:
-      return { ...state, tags: payload };
-
-    case types.GET_TAG_FAILURE:
-      return { ...state };
-
+    case types.GET_DATA_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case types.GET_DATA_SUCCESS:
+      return {
+        ...state,
+        watches: payload,
+        isLoading: false,
+        isError: false,
+      };
+    case types.GET_DATA_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
     default:
       return state;
-  }
-};
-
+  };
+}
 export { reducer };

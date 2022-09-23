@@ -1,10 +1,8 @@
+// NOTE: DO NOT MODIFY the intial state structure in this file.
 import * as types from "./actionTypes";
-import { getLocalData, saveLocalData } from "../../utils/localStorage";
-
 const initialState = {
-  isAuth: getLocalData("token") ? true : false,
-  token: getLocalData("token") || "",
-  profileData: [],
+  isAuth: false,
+  token: "",
   isLoading: false,
   isError: false,
 };
@@ -12,30 +10,28 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case types.REGISTER_REQUEST:
-      return { ...state, isLoading: true };
-
-    case types.REGISTER_SUCCESS:
-      return { ...state, isLoading: false };
-    case types.REGISTER_FAILURE:
-      return { ...state, isLoading: false, isError: true };
-
     case types.LOGIN_REQUEST:
-      return { ...state, isLoading: true };
-    case types.LOGIN_SUCCESS:
-      saveLocalData("token", payload);
-      return { ...state, isLoading: false, isAuth: true, token: payload };
-    case types.LOGIN_FAILURE:
       return {
         ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case types.LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuth: true,
+        token: payload,
         isLoading: false,
-        isError: true,
+        isError:false,
+      }
+     case types.LOGIN_FAILURE:
+      return {
+        ...state,
         isAuth: false,
         token: "",
+        isLoading: false,
+        isError: true,
       };
-
-    case types.PROFILE_SUCCESS:
-      return { ...state, profileData: payload };
     default:
       return state;
   }
