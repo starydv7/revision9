@@ -5,9 +5,7 @@ import MainRoutes from "./pages/MainRoutes";
 
 function App() {
   return (
-    <Container minWidth="6xl">
-      <MainRoutes />
-    </Container>
+   <MainRoutes/>
   );
 }
 
